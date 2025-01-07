@@ -22,4 +22,6 @@ def emotion_detector(text_to_analyse):
     # Return formatted json with all required items
     return filtered_response
 
+text_to_analyze = 'I love this new technology.'
+print(emotion_detector(text_to_analyze))
 
