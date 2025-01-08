@@ -3,7 +3,6 @@
    localhost:5000."""
 from flask import Flask, render_template, request
 from EmotionDetection.emotion_detection import emotion_detector
-from rich import print
 
 app = Flask('Emotion Detector')
 
@@ -16,9 +15,13 @@ def emotion_detection():
     """
     # Request input text from front-end html
     text_to_analyze = request.args.get('textToAnalyze')
-    # Send the text to emotion_detector function 
+    # Send the text to emotion_detector function
     result = emotion_detector(text_to_analyze)
-    return f"""For the given statement, the system response is 'anger': {result['anger']}, 
+
+    if result['dominant_emotion'] is None:
+        return 'Invalid text! Please try again!'
+
+    return f"""For the given statement, the system response is 'anger': {result['anger']},
             'disgust': {result['disgust']}, 'fear': {result['fear']}, 'joy': {result['joy']},
             and 'sadness': {result['sadness']}. The dominant emotion is 
             {result['dominant_emotion']}."""
